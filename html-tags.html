@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Tags Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #2c3e50; }
+        h3 { color: #16a085; }
+        code { background-color: #f7f7f9; padding: 2px 4px; font-family: monospace; }
+        pre { background-color: #f7f7f9; padding: 10px; overflow: auto; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Full HTML5 Tags Documentation</h1>
+
+    <h2>Text Content Tags</h2>
+    <h3>&lt;p&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a paragraph of text.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>: CSS class for styling.</li>
+                <li><code>id</code>: Unique identifier.</li>
+                <li><code>style</code>: Inline CSS styling.</li>
+                <li><code>title</code>: Text to display on hover.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;p&gt;This is a paragraph of text.&lt;/p&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;h1&gt; to &lt;h6&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents headings, with <code>&lt;h1&gt;</code> being the highest level.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code> (same as above).</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;span&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Used for grouping inline elements to apply styles or attributes.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;span class="highlight"&gt;highlighted text&lt;/span&gt;</pre>
+        </li>
+    </ul>
+
+    <h2>Document Structure Tags</h2>
+    <h3>&lt;html&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Root element of an HTML document.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>lang</code>: Specifies the language of the document.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;html lang="en"&gt;&lt;/html&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;head&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Contains metadata, links to stylesheets, and scripts.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>profile</code>: Profile of the document.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;body&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Contains the content of an HTML document.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;body&gt;
+    &lt;p&gt;Page content goes here.&lt;/p&gt;
+&lt;/body&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h2>Multimedia Tags</h2>
+    <h3>&lt;img&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Embeds an image.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>src</code>: Path to the image file.</li>
+                <li><code>alt</code>: Alternative text for the image.</li>
+                <li><code>width</code>, <code>height</code>: Dimensions of the image.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;img src="image.jpg" alt="Description of image" width="300" height="200"&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;video&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Embeds a video.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>src</code>: Path to the video file.</li>
+                <li><code>controls</code>: Display video controls.</li>
+                <li><code>autoplay</code>, <code>loop</code>, <code>muted</code>: Behavior attributes.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;video src="video.mp4" controls width="400"&gt;
+    Your browser does not support the video tag.
+&lt;/video&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;audio&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Embeds audio content.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>src</code>: Path to the audio file.</li>
+                <li><code>controls</code>: Display audio controls.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;audio src="audio.mp3" controls&gt;
+    Your browser does not support the audio tag.
+&lt;/audio&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h2>Form Tags</h2>
+    <h3>&lt;form&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents an HTML form for user input.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>action</code>: URL to send form data.</li>
+                <li><code>method</code>: HTTP method (GET or POST).</li>
+                <li><code>enctype</code>: Encoding type for form data.</li>
+                <li><code>autocomplete</code>: Toggles autocomplete feature.</li>
+                <li><code>novalidate</code>: Disables default validation.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;form action="/submit" method="post"&gt;
+    &lt;input type="text" name="username"&gt;
+&lt;/form&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;input&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Used to create interactive controls for web-based forms.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>type</code>: Type of input (e.g., text, password, email).</li>
+                <li><code>name</code>: Name of the input.</li>
+                <li><code>value</code>: Default value of the input.</li>
+                <li><code>placeholder</code>: Placeholder text to display.</li>
+                <li><code>required</code>: Specifies that the input must be filled out before submitting.</li>
+                <li><code>disabled</code>: Disables the input element.</li>
+                <li><code>readonly</code>: Makes the input field read-only.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;input type="text" name="fullname" placeholder="Enter your full name"&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;textarea&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a multi-line text input control.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>name</code>: Name of the textarea.</li>
+                <li><code>rows</code>: Number of visible text lines.</li>
+                <li><code>cols</code>: Visible width of textarea.</li>
+                <li><code>placeholder</code>: Placeholder text for the textarea.</li>
+                <li><code>required</code>, <code>disabled</code>, <code>readonly</code> (same as input).</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;textarea name="message" rows="5" cols="30" placeholder="Enter your message"&gt;&lt;/textarea&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;button&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a clickable button.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>type</code>: Button type (button, submit, reset).</li>
+                <li><code>disabled</code>: Disables the button.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;button type="submit"&gt;Submit&lt;/button&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;select&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a drop-down list.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>name</code>: Name of the select element.</li>
+                <li><code>disabled</code>: Disables the select element.</li>
+                <li><code>multiple</code>: Allows multiple selections.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;select name="options"&gt;
+    &lt;option value="1"&gt;Option 1&lt;/option&gt;
+    &lt;option value="2"&gt;Option 2&lt;/option&gt;
+&lt;/select&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;option&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents an option in a drop-down list.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>value</code>: Value associated with the option.</li>
+                <li><code>selected</code>: Specifies that the option is pre-selected.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;option value="1"&gt;Option 1&lt;/option&gt;</pre>
+        </li>
+    </ul>
+
+    <h3>&lt;label&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a caption for an item in a user interface.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>for</code>: Associates the label with a specific input element.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;label for="username"&gt;Username:&lt;/label&gt;
+&lt;input type="text" id="username" name="username"&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;fieldset&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Groups related elements in a form.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>disabled</code>: Disables all controls inside the fieldset.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;fieldset&gt;
+    &lt;legend&gt;Account Information&lt;/legend&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email"&gt;
+&lt;/fieldset&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;legend&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Provides a caption for the <code>&lt;fieldset&gt;</code>.</li>
+        <li><strong>Example</strong>:
+            <pre>&lt;legend&gt;Personal Details&lt;/legend&gt;</pre>
+        </li>
+    </ul>
+
+    <h2>Semantic Tags</h2>
+    <h3>&lt;header&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents introductory content or navigation links.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;header&gt;
+    &lt;h1&gt;Website Header&lt;/h1&gt;
+&lt;/header&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;footer&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents the footer of a section or document.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;footer&gt;
+    &lt;p&gt;© 2025 My Website&lt;/p&gt;
+&lt;/footer&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h2>Table Tags</h2>
+    <h3>&lt;table&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents tabular data.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>border</code>: Size of the border around table.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;table border="1"&gt;
+    &lt;tr&gt;
+        &lt;th&gt;Header 1&lt;/th&gt;
+        &lt;th&gt;Header 2&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Data 1&lt;/td&gt;
+        &lt;td&gt;Data 2&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;tr&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a row in a table.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;tr&gt;&lt;td&gt;Row Cell&lt;/td&gt;&lt;/tr&gt;</pre>
+        </li>
+    </ul>
+
+    <h2>Link Tags</h2>
+    <h3>&lt;a&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Defines a hyperlink.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>href</code>: URL the link goes to.</li>
+                <li><code>target</code>: Where to open the link.</li>
+                <li><code>title</code>: Additional information about the link.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;a href="https://www.example.com" target="_blank"&gt;Visit Example.com&lt;/a&gt;</pre>
+        </li>
+    </ul>
+
+    <h2>List Tags</h2>
+    <h3>&lt;ul&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents an unordered list.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;ul&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;ol&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents an ordered list.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>class</code>, <code>id</code>, <code>style</code>, <code>title</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>
+&lt;ol&gt;
+    &lt;li&gt;First item&lt;/li&gt;
+    &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ol&gt;
+            </pre>
+        </li>
+    </ul>
+
+    <h3>&lt;li&gt;</h3>
+    <ul>
+        <li><strong>Description</strong>: Represents a list item.</li>
+        <li><strong>Common/Global Attributes</strong>:
+            <ul>
+                <li><code>value</code>: Overrides the current item value in an ordered list.</li>
+            </ul>
+        </li>
+        <li><strong>Example</strong>:
+            <pre>&lt;li&gt;List item content&lt;/li&gt;</pre>
+        </li>
+    </ul>
+
+</body>
+</html>
