@@ -1,3 +1,11 @@
+# Git & GitHub Basic
+
+Demo - [Watch the video on YouTube](https://youtu.be/0kGr88A_dDI)
+
+[![Watch the video](https://img.youtube.com/vi/0kGr88A_dDI/0.jpg)](https://youtu.be/0kGr88A_dDI)
+
+---
+
 ## ✅ Step 1: Install Git on Windows
 
 Same as before:
