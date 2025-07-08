@@ -46,6 +46,28 @@ You'll be prompted for your **GitHub username and a personal access token** (not
 
 ---
 
+
+### ✅ **Fix for HTTPS Clone Issue on Windows**
+
+#### 🔧 Step 1: Tell Git to Use Windows SSL (Avoid OpenSSL)
+
+In **Command Prompt** (or Git Bash), run:
+
+```cmd
+git config --global http.sslBackend schannel
+```
+
+This tells Git to use **Windows' native SSL** (schannel) instead of OpenSSL, which is what's causing your "bad record mac" error.
+
+#### 🔁 Step 2: Retry the HTTPS Clone
+
+```cmd
+git clone https://github.com/your-username/your-repo.git
+```
+
+
+---
+
 ## ✅ Step 5: Generate and Use a GitHub Personal Access Token (PAT)
 
 1. Go to: [https://github.com/settings/tokens](https://github.com/settings/tokens)
