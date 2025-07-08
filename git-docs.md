@@ -57,6 +57,11 @@ You'll be prompted for your **GitHub username and a personal access token** (not
 
 ### ✅ **Fix for HTTPS Clone Issue on Windows**
 
+<img width="854" alt="image" src="https://github.com/user-attachments/assets/8665817e-c15e-4d75-b205-31781e71fb54" />
+
+<img width="853" alt="image" src="https://github.com/user-attachments/assets/74df52b6-17ca-41a1-b4a5-35acacac0443" />
+
+
 #### 🔧 Step 1: Tell Git to Use Windows SSL (Avoid OpenSSL)
 
 In **Command Prompt** (or Git Bash), run:
