@@ -197,7 +197,7 @@ node file-log.js
 
 ---
 
-## ✅ 3. **Database Integration: MongoDB + Mongoose**
+## ✅ 3. **Database Integration**
 
 ### 📂 Project: Store Users in a Database
 * Backend: Node.js + Express + MySQL
