@@ -129,7 +129,61 @@ npm init -y
 npm install express
 ```
 
-**Code (`app.js`):**
+## 📘 API Endpoints
+
+### GET `/todos`
+
+**Description:** Retrieve all TODO items.
+
+---
+
+### POST `/todos`
+
+**Description:** Create a new TODO item.
+
+**Request Body:**
+
+```json
+{
+  "title": "New Task"
+}
+```
+
+---
+
+### PUT `/todos/:id`
+
+**Description:** Fully replace a TODO item.
+
+**Request Body:**
+
+```json
+{
+  "title": "Rewritten Task",
+  "completed": true
+}
+```
+
+**Validation:**
+
+* `title` is required, must be a non-empty string
+* `completed` is required, must be a boolean
+
+---
+
+### PATCH `/todos/:id`
+
+**Description:** Partially update fields of a TODO item.
+
+---
+
+### DELETE `/todos/:id`
+
+**Description:** Delete a TODO item by ID.
+
+---
+
+**Source Code (`app.js`):**
 
 ```js
 const express = require('express');
@@ -138,29 +192,126 @@ const app = express();
 app.use(express.json());
 
 let todos = [
-  { id: 1, task: 'Buy groceries' },
-  { id: 2, task: 'Clean the house' }
+    { id: 1, title: 'Learn Node.js', completed: false },
+    { id: 2, title: 'Build a REST API', completed: false },
+    { id: 3, title: 'Deploy to App', completed: false }
 ];
 
+// GET all todos
 app.get('/todos', (req, res) => {
-  res.json(todos);
+    res.json(todos);
 });
 
+// POST a new todo
 app.post('/todos', (req, res) => {
-  const newTodo = { id: Date.now(), task: req.body.task };
-  todos.push(newTodo);
-  res.status(201).json(newTodo);
+    const { title } = req.body;
+
+    if (!title || typeof title !== 'string' || title.trim() === '') {
+        return res.status(400).json({ message: 'Title is required and must be a non-empty string.' });
+    }
+
+    const newTodo = {
+        id: todos.length + 1,
+        title: title.trim(),
+        completed: false
+    };
+
+    todos.push(newTodo);
+    res.status(201).json(newTodo);
 });
 
+// PUT (replace entire todo)
+app.put('/todos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const { title, completed } = req.body;
+
+    const index = todos.findIndex(t => t.id === id);
+    if (index === -1) {
+        return res.status(404).json({ message: 'Todo not found' });
+    }
+
+    if (!title || typeof title !== 'string' || title.trim() === '') {
+        return res.status(400).json({ message: 'Title is required and must be a non-empty string.' });
+    }
+
+    if (typeof completed !== 'boolean') {
+        return res.status(400).json({ message: 'Completed is required and must be a boolean.' });
+    }
+
+    const updatedTodo = { id, title: title.trim(), completed };
+    todos[index] = updatedTodo;
+
+    res.json(updatedTodo);
+});
+
+// PATCH (partial update)
+app.patch('/todos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const todo = todos.find(t => t.id === id);
+
+    if (!todo) {
+        return res.status(404).json({ message: 'Todo not found' });
+    }
+
+    const { title, completed } = req.body;
+
+    if (title !== undefined) {
+        if (typeof title !== 'string' || title.trim() === '') {
+            return res.status(400).json({ message: 'Title must be a non-empty string.' });
+        }
+        todo.title = title.trim();
+    }
+
+    if (completed !== undefined) {
+        if (typeof completed !== 'boolean') {
+            return res.status(400).json({ message: 'Completed must be a boolean.' });
+        }
+        todo.completed = completed;
+    }
+
+    res.json(todo);
+});
+
+// DELETE a todo by ID
+app.delete('/todos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = todos.findIndex(t => t.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({ message: 'Todo not found' });
+    }
+
+    const deletedTodo = todos.splice(index, 1)[0];
+    res.json(deletedTodo);
+});
+
+// Start the server
 app.listen(3000, () => {
-  console.log('API running on http://localhost:3000');
+    console.log('API running on http://localhost:3000');
 });
 ```
+---
+## 🚀 Run the Server
 
+```bash
+node app.js
+```
+
+Server runs on: [http://localhost:3000](http://localhost:3000)
+
+---
 Try it with [Postman](https://www.postman.com/) or curl:
 
-* `GET http://localhost:3000/todos`
-* `POST http://localhost:3000/todos` with JSON body: `{ "task": "Walk the dog" }`
+## 🧪 curl Commands for TODO API
+
+| Method | Endpoint            | Description               | Example curl Command |
+|--------|---------------------|---------------------------|-----------------------|
+| GET    | `/todos`            | Get all TODOs             | `curl http://localhost:3000/todos` |
+| POST   | `/todos`            | Create new TODO           | `curl -X POST http://localhost:3000/todos -H "Content-Type: application/json" -d '{"title":"Walk the dog"}'` |
+| PUT    | `/todos/:id`        | Replace TODO (full)       | `curl -X PUT http://localhost:3000/todos/1 -H "Content-Type: application/json" -d '{"title":"Go shopping", "completed":true}'` |
+| PATCH  | `/todos/:id`        | Update TODO (partial)     | `curl -X PATCH http://localhost:3000/todos/1 -H "Content-Type: application/json" -d '{"completed":true}'` |
+| DELETE | `/todos/:id`        | Delete a TODO             | `curl -X DELETE http://localhost:3000/todos/1` |
+
 
 ---
 
