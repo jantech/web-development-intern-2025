@@ -235,7 +235,7 @@ node index.js
 }
 ```
 
-Use [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to test API endpoints.
+Use [Postman](https://www.postman.com/) to test API endpoints.
 
 ---
 
