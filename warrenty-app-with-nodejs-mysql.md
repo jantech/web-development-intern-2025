@@ -1,11 +1,12 @@
 Perfect! Below is a complete **end-to-end project setup** for your warranty form using:
 
-- ✅ Frontend: HTML + JavaScript
-- ✅ Backend: Node.js + Express
-- ✅ Database: MySQL
-- ✅ CORS Support
-- ✅ Server-side Validation
-- ✅ Fetch-based form submission
+✅ Frontend: HTML + JavaScript
+✅ Backend: Node.js + Express
+✅ Database: MySQL - connection using `mysql2`
+✅ Environment variables with `.env`
+✅ CORS Support
+✅ Server-side Validation
+✅ Fetch-based form submission
 
 ---
 
@@ -23,6 +24,19 @@ warranty-form-project/
 │   └── assets/
 │       └── css/
 │           └── bootstrap.min.css
+```
+
+
+---
+
+## 📦 Backend Setup Instructions
+
+1. Inside `backend/` folder:
+
+```bash
+npm init -y
+npm install express cors mysql2 dotenv
+node server.js
 ```
 
 ---
@@ -143,17 +157,6 @@ CREATE TABLE IF NOT EXISTS warranty_requests (
 );
 ```
 
----
-
-## 📦 Backend Setup Instructions
-
-1. Inside `backend/` folder:
-
-```bash
-npm init -y
-npm install express cors mysql2
-node server.js
-```
 
 ---
 
