@@ -1,5 +1,5 @@
-````markdown
 # Full HTML5 Tags Documentation
+---
 
 ## Text Content Tags
 
@@ -13,7 +13,6 @@
 - **Example**:
   ```html
   <p>This is a paragraph of text.</p>
-````
 
 ### `<h1>` to `<h6>`
 
@@ -321,5 +320,3 @@
   ```html
   <li>List item content</li>
   ```
-
-```
