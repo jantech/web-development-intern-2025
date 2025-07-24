@@ -1,5 +1,4 @@
 # Full HTML5 Tags Documentation
----
 
 ## Text Content Tags
 
