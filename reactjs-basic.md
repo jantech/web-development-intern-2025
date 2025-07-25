@@ -55,6 +55,7 @@ const element = <h1>Hello, JSX!</h1>;
 ---
 
 ## 🔄 4. Props (Component Inputs)
+props (short for properties) are a way to pass data from a parent component to a child component.
 
 ```jsx
 function Greet(props) {
