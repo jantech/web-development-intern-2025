@@ -1,264 +1,89 @@
-**React Router** is an essential step in building multi-page applications in React.
-
-React Router v6+ (latest version):
+Perfect! Let’s build a **Personal Portfolio Website** using **React Router + Vite + TypeScript (TSX)**.
 
 ---
 
-## 🧭 What is React Router?
+## 🎯 What We’ll Cover
 
-React Router lets you:
-
-* Navigate between pages (components)
-* Use URLs to show different views
-* Handle nested routes, redirects, and more
+✅ Vite + TypeScript setup
+✅ React Router setup
+✅ Page components (`Home`, `About`, `Projects`, `Contact`)
+✅ Navigation bar with `Link`
+✅ Dynamic routes (optional)
+✅ Basic layout for portfolio
 
 ---
 
-## ⚙️ 1. Installation
-
-Run this in your React project:
+## 📦 1. Create Project
 
 ```bash
+npm create vite@latest my-portfolio -- --template react-ts
+cd my-portfolio
+npm install
 npm install react-router-dom
+npm run dev
 ```
 
 ---
 
-## 🗺️ 2. Basic Structure
-
-You'll wrap your app with a router and define routes.
-
-### Example:
-
-```jsx
-// App.js
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import About from './About';
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-```
-
----
-
-## 🧱 3. Create Simple Pages (Components)
-
-```jsx
-// Home.js
-export default function Home() {
-  return <h1>Welcome to the Home Page</h1>;
-}
-
-// About.js
-export default function About() {
-  return <h1>About Us</h1>;
-}
-```
-
----
-
-## 🔗 4. Navigation (Link vs `<a>`)
-
-Use `<Link>` instead of `<a>` for internal navigation.
-
-```jsx
-import { Link } from 'react-router-dom';
-
-function Navbar() {
-  return (
-    <nav>
-      <Link to="/">Home</Link> | <Link to="/about">About</Link>
-    </nav>
-  );
-}
-```
-
----
-
-## 🔁 5. Redirects and Not Found (Optional)
-
-### Not Found (404):
-
-```jsx
-<Route path="*" element={<h2>Page Not Found</h2>} />
-```
-
-### Redirect:
-
-```jsx
-import { Navigate } from 'react-router-dom';
-
-<Route path="/old" element={<Navigate to="/new" />} />
-```
-
----
-
-## 🧭 6. useNavigate Hook (Programmatic Navigation)
-
-```jsx
-import { useNavigate } from 'react-router-dom';
-
-function Login() {
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    // do login logic
-    navigate('/dashboard');
-  };
-
-  return <button onClick={handleLogin}>Login</button>;
-}
-```
-
----
-
-## 🛠️ 7. useParams Hook (Dynamic Routing)
-
-```jsx
-<Route path="/user/:id" element={<User />} />
-```
-
-```jsx
-// User.js
-import { useParams } from 'react-router-dom';
-
-export default function User() {
-  const { id } = useParams();
-  return <h2>User ID: {id}</h2>;
-}
-```
-
----
-
-## ✅ Summary
-
-| Feature        | Code Example                   |
-| -------------- | ------------------------------ |
-| Setup Router   | `<BrowserRouter>`              |
-| Define Routes  | `<Routes> <Route /> </Routes>` |
-| Navigate Links | `<Link to="/path">`            |
-| Dynamic Route  | `/user/:id` and `useParams()`  |
-| Redirect       | `<Navigate to="/new" />`       |
-| Programmatic   | `useNavigate()`                |
-
----
-
-Great! Let's build a **simple 3-page React app** using **React Router**. This app will include:
-
-### ✅ Pages:
-
-1. Home Page
-2. About Page
-3. Contact Page
-
----
-
-## 📁 Folder Structure
+## 📁 2. Folder Structure
 
 ```
 src/
-├── App.js
+├── App.tsx
+├── main.tsx
 ├── pages/
-│   ├── Home.js
-│   ├── About.js
-│   └── Contact.js
+│   ├── Home.tsx
+│   ├── About.tsx
+│   ├── Projects.tsx
+│   └── Contact.tsx
 ├── components/
-│   └── Navbar.js
+│   └── Navbar.tsx
 ```
 
 ---
 
-## 1️⃣ Install React Router
+## 📄 3. Set Up React Router
 
-Make sure it's installed:
+### 📁 `src/main.tsx`
 
-```bash
-npm install react-router-dom
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
 ```
 
 ---
 
-## 2️⃣ Create Page Components
+## 🔁 4. Set Up Routing
 
-### `pages/Home.js`
+### 📁 `src/App.tsx`
 
-```jsx
-export default function Home() {
-  return <h2>🏠 Welcome to the Home Page</h2>;
-}
-```
-
-### `pages/About.js`
-
-```jsx
-export default function About() {
-  return <h2>ℹ️ About Us</h2>;
-}
-```
-
-### `pages/Contact.js`
-
-```jsx
-export default function Contact() {
-  return <h2>📞 Contact Page</h2>;
-}
-```
-
----
-
-## 3️⃣ Create Navigation Bar
-
-### `components/Navbar.js`
-
-```jsx
-import { Link } from 'react-router-dom';
-
-export default function Navbar() {
-  return (
-    <nav style={{ padding: '1rem', background: '#eee' }}>
-      <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
-      <Link to="/about" style={{ marginRight: '10px' }}>About</Link>
-      <Link to="/contact">Contact</Link>
-    </nav>
-  );
-}
-```
-
----
-
-## 4️⃣ Main App Setup with Routing
-
-### `App.js`
-
-```jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+```tsx
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
+import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <BrowserRouter>
+    <div>
       <Navbar />
-      <div style={{ padding: '1rem' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<h2>404 - Page Not Found</h2>} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </div>
   );
 }
 
@@ -267,353 +92,124 @@ export default App;
 
 ---
 
-## ✅ How It Works:
+## 🧭 5. Create Navbar
 
-| File               | Role                                       |
-| ------------------ | ------------------------------------------ |
-| `BrowserRouter`    | Wraps the app, enabling routing            |
-| `Routes` + `Route` | Define what to show for each URL path      |
-| `Link`             | Navigates between pages without refreshing |
-| `Navbar.js`        | Provides navigation to all pages           |
-| `*` Route          | Catches undefined routes (404 page)        |
+### 📁 `src/components/Navbar.tsx`
 
----
-
-## 🧪 To Run the App:
-
-Make sure you have this in your `index.js` (default from Create React App):
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
-```
-
-Then run:
-
-```bash
-npm start
-```
-
----
-
-## 🏁 Result:
-
-* Go to `/` → Home page
-* Go to `/about` → About page
-* Go to `/contact` → Contact page
-* Try `/something` → See "404 - Page Not Found"
-
----
-
-Perfect! Let's enhance the React Router app by adding **Context API** for **state management**. Context helps you **share state** (like user data, theme, language, etc.) across components **without prop drilling**.
-
----
-
-## 🧠 What We'll Do:
-
-We’ll build a context to manage a **user's login status**, and display their name across all pages.
-
----
-
-## 📁 Updated Folder Structure
-
-```
-src/
-├── App.js
-├── index.js
-├── context/
-│   └── UserContext.js
-├── pages/
-│   ├── Home.js
-│   ├── About.js
-│   └── Contact.js
-├── components/
-│   └── Navbar.js
-```
-
----
-
-## 1️⃣ Create the Context
-
-### `context/UserContext.js`
-
-```jsx
-import { createContext, useState } from 'react';
-
-export const UserContext = createContext();
-
-export function UserProvider({ children }) {
-  const [user, setUser] = useState({ name: "Alice", loggedIn: true });
-
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-}
-```
-
-✅ **Explanation:**
-
-* `UserContext` is created with `createContext()`.
-* `UserProvider` wraps your app and provides the state (`user` and `setUser`).
-
----
-
-## 2️⃣ Wrap Your App with the Provider
-
-### `index.js`
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { UserProvider } from './context/UserContext';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <UserProvider>
-    <App />
-  </UserProvider>
-);
-```
-
----
-
-## 3️⃣ Access Context in Any Component
-
-### `components/Navbar.js`
-
-```jsx
+```tsx
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
 
 export default function Navbar() {
-  const { user } = useContext(UserContext);
-
   return (
-    <nav style={{ padding: '1rem', background: '#eee' }}>
-      <span style={{ marginRight: '1rem' }}>👤 {user.name}</span>
-      <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
-      <Link to="/about" style={{ marginRight: '10px' }}>About</Link>
+    <nav style={{ display: 'flex', gap: '1rem', padding: '1rem', background: '#eee' }}>
+      <Link to="/">Home</Link>
+      <Link to="/about">About</Link>
+      <Link to="/projects">Projects</Link>
       <Link to="/contact">Contact</Link>
     </nav>
   );
 }
 ```
 
-✅ Now the Navbar shows the current user's name from the context.
-
 ---
 
-## 4️⃣ Update State from a Page
+## 📄 6. Create Page Components
 
-### `pages/Contact.js`
+### 📁 `src/pages/Home.tsx`
 
-```jsx
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+```tsx
+export default function Home() {
+  return <h1>Welcome to My Portfolio</h1>;
+}
+```
 
+### 📁 `src/pages/About.tsx`
+
+```tsx
+export default function About() {
+  return <h1>About Me</h1>;
+}
+```
+
+### 📁 `src/pages/Projects.tsx`
+
+```tsx
+export default function Projects() {
+  return <h1>My Projects</h1>;
+}
+```
+
+### 📁 `src/pages/Contact.tsx`
+
+```tsx
 export default function Contact() {
-  const { user, setUser } = useContext(UserContext);
-
-  const handleLogout = () => {
-    setUser({ ...user, loggedIn: false, name: "Guest" });
-  };
-
-  return (
-    <div>
-      <h2>📞 Contact Page</h2>
-      <p>Current User: {user.name}</p>
-      <button onClick={handleLogout}>Log Out</button>
-    </div>
-  );
+  return <h1>Contact Me</h1>;
 }
 ```
 
 ---
 
-## ✅ Summary of What We Did:
+## 🧠 7. Understanding Routing
 
-| Step             | Purpose                                            |
-| ---------------- | -------------------------------------------------- |
-| `UserContext.js` | Created global state using `createContext`         |
-| `UserProvider`   | Shared state via Context Provider                  |
-| `useContext()`   | Accessed or modified user state from any component |
-| Navbar           | Displayed current user                             |
-| Contact page     | Modified global state (logged out user)            |
+| Component  | Path        | Role                  |
+| ---------- | ----------- | --------------------- |
+| `Home`     | `/`         | Landing page          |
+| `About`    | `/about`    | Bio, experience, etc. |
+| `Projects` | `/projects` | Showcase your work    |
+| `Contact`  | `/contact`  | Email, social links   |
 
----
-
-## 🌙 Use context for theme switching (light/dark)?
-
-Awesome! Let's use **React Context API** to implement a **light/dark theme switcher** in your app. This is a real-world use case and very common in modern UIs.
+📝 Each route maps to a different **page component** via `<Route>` and `<Link>` is used instead of `<a>` for SPA navigation.
 
 ---
 
-## 🎯 What We’ll Build:
+## ✨ 8. Style Suggestion (Optional)
 
-* A global theme context (`ThemeContext`)
-* A toggle button in the `Navbar`
-* Theme styles applied to the whole app
-
----
-
-## 📁 Updated Folder Structure
-
-```
-src/
-├── App.js
-├── index.js
-├── context/
-│   ├── UserContext.js
-│   └── ThemeContext.js  ← New
-├── pages/
-│   ├── Home.js
-│   ├── About.js
-│   └── Contact.js
-├── components/
-│   └── Navbar.js
-```
-
----
-
-## 1️⃣ Create Theme Context
-
-### `context/ThemeContext.js`
-
-```jsx
-import { createContext, useState, useEffect } from 'react';
-
-export const ThemeContext = createContext();
-
-export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
-
-  // Optional: Load from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('app-theme');
-    if (savedTheme) setTheme(savedTheme);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('app-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
-  };
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={`app ${theme}`}>{children}</div>
-    </ThemeContext.Provider>
-  );
-}
-```
-
-✅ This provides the current theme and a function to toggle it.
-
----
-
-## 2️⃣ Wrap App with ThemeProvider
-
-### `index.js`
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import { UserProvider } from './context/UserContext';
-import { ThemeProvider } from './context/ThemeContext';
-import './index.css'; // Add theme styles here
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <UserProvider>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </UserProvider>
-);
-```
-
----
-
-## 3️⃣ Add Toggle Button in Navbar
-
-### `components/Navbar.js`
-
-```jsx
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
-import { ThemeContext } from '../context/ThemeContext';
-
-export default function Navbar() {
-  const { user } = useContext(UserContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
-
-  return (
-    <nav style={{ padding: '1rem', background: theme === 'light' ? '#eee' : '#333', color: theme === 'light' ? '#000' : '#fff' }}>
-      <span style={{ marginRight: '1rem' }}>👤 {user.name}</span>
-      <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
-      <Link to="/about" style={{ marginRight: '10px' }}>About</Link>
-      <Link to="/contact" style={{ marginRight: '10px' }}>Contact</Link>
-      <button onClick={toggleTheme} style={{ float: 'right' }}>
-        Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-      </button>
-    </nav>
-  );
-}
-```
-
----
-
-## 4️⃣ Add Basic Theme Styles
-
-### `index.css` (global styles)
+Add this to `index.css` or use Tailwind / styled-components:
 
 ```css
-/* Default app styles */
 body {
-  margin: 0;
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.app.light {
-  background-color: #ffffff;
-  color: #000000;
+nav a {
+  text-decoration: none;
+  color: #333;
 }
 
-.app.dark {
-  background-color: #121212;
-  color: #ffffff;
+nav a:hover {
+  color: #0070f3;
 }
 ```
 
 ---
 
-## ✅ Result:
+## 🚀 9. Deploy (optional)
 
-* The entire app background/text changes based on theme.
-* Theme is saved in `localStorage`.
-* Toggle is always available in the navbar.
+### Deploy with Vercel:
+
+```bash
+npm run build
+```
+
+Upload the `dist/` folder.
+
+🛠 If using React Router, configure:
+
+* **Vercel:** Use `rewrite` rule to `index.html`
+
+  ```
+  /*    /index.html   200
+  ```
 
 ---
 
 ## ✅ Summary
 
-| Feature      | Code                                    |
-| ------------ | --------------------------------------- |
-| Theme State  | `useState('light')` in context          |
-| Access Theme | `useContext(ThemeContext)`              |
-| Theme Switch | `toggleTheme()` in Navbar               |
-| Styling      | Based on `.light` / `.dark` CSS classes |
-
----
+| Feature              | Status |
+| -------------------- | ------ |
+| Vite + TS setup      | ✅      |
+| React Router working | ✅      |
+| Pages created        | ✅      |
+| Navigation bar       | ✅      |
