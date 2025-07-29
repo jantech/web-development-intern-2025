@@ -5,11 +5,17 @@ Perfect! Let’s build a **Personal Portfolio Website** using **React Router + V
 ## 🎯 What We’ll Cover
 
 ✅ Vite + TypeScript setup
+
 ✅ React Router setup
+
 ✅ Page components (`Home`, `About`, `Projects`, `Contact`)
+
 ✅ Navigation bar with `Link`
+
 ✅ Dynamic routes (optional)
+
 ✅ Basic layout for portfolio
+
 
 ---
 
