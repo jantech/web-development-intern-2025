@@ -71,14 +71,32 @@ import { useRef } from 'react';
 const FocusInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusInput = () => {
-    inputRef.current?.focus();
+  const handleSetName = () => {
+
+    console.log(inputRef);
+    const inputValue = inputRef.current?.value;
+
+    // add the input validation
+    if (inputValue === undefined || inputValue === null || inputValue.trim() === "") {
+      console.error("Input value is undefined or null");
+      return;
+    }
+
+    console.log("User set to: " + inputValue);
+    // set the value
+    setUser({ name: inputValue || null });
+
+    // Clear the input field after setting the name
+    inputRef.current!.value = '';
+
+    // Focus back on the input field
+    inputRef.current?.focus(); 
   };
 
   return (
     <>
       <input ref={inputRef} placeholder="Type here..." />
-      <button onClick={focusInput}>Focus</button>
+      <button onClick={handleSetName}>Set Name</button>
     </>
   );
 };
