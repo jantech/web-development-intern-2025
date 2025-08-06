@@ -112,42 +112,149 @@ const FocusInput = () => {
 
 ## 🔹 4. `useContext` – For Global State (like theme or auth)
 
-### ✅ Use Case: Access global theme
+---
+
+### 🧠 1. **What is `useContext`?**
+
+* `useContext` is a React **hook** that allows you to **read values from a context**.
+* It helps **avoid prop drilling** by making data available globally to any component that needs it.
+
+> 💬 Think of it like a global state system, built into React, for static or shared values like **theme**, **language**, **auth state**, etc.
+
+---
+
+### 🏗️ 2. **What is a Context?**
+
+A **Context** is a React object created using `createContext()` that lets you share data **across your component tree**, without passing props manually at every level.
+
+```tsx
+import { createContext } from 'react';
+
+const ThemeContext = createContext('light'); // default value
+```
+
+---
+
+### 🧩 3. **How `useContext` Works**
+
+`useContext` reads the value from the nearest `<MyContext.Provider>` up the component tree.
+
+```tsx
+import { useContext } from 'react';
+
+const value = useContext(ThemeContext);
+```
+
+If no Provider is found, it uses the **default value** from `createContext()`.
+
+---
+
+## 🚀 Example: Using `useContext` to Share Theme
+
+Let’s say we want to toggle between `"light"` and `"dark"` themes.
+
+---
+
+### ✅ Step 1: Create the Context
 
 ```tsx
 // ThemeContext.tsx
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
-export const ThemeContext = createContext<'light' | 'dark'>('light');
+type Theme = 'light' | 'dark';
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType>({
+  theme: 'light',
+  toggleTheme: () => {},
+});
+
+// Custom hook to access the theme context
 export const useTheme = () => useContext(ThemeContext);
+
+// Provider component
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const [theme, setTheme] = useState<Theme>('light');
+
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
 ```
+
+---
+
+### ✅ Step 2: Wrap Your App with the Provider
 
 ```tsx
 // App.tsx
-import { ThemeContext } from './ThemeContext';
+import { ThemeProvider } from './ThemeContext';
 import Page from './Page';
 
 const App = () => (
-  <ThemeContext.Provider value="dark">
+  <ThemeProvider>
     <Page />
-  </ThemeContext.Provider>
+  </ThemeProvider>
 );
+
+export default App;
 ```
+
+> 🔒 This step is critical. Without a Provider, `useContext()` will return the default value.
+
+---
+
+### ✅ Step 3: Use the Context Anywhere in the App
 
 ```tsx
 // Page.tsx
 import { useTheme } from './ThemeContext';
 
 const Page = () => {
-  const theme = useTheme();
-  return <div>Current Theme: {theme}</div>;
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <div>
+      <h1>Current Theme: {theme}</h1>
+      <button onClick={toggleTheme}>
+        {theme === 'light' ? '🌙 Dark Mode' : '🌞 Light Mode'}
+      </button>
+    </div>
+  );
 };
+
+export default Page;
 ```
 
-### 💡 Explanation:
+---
 
-* `useContext` lets you read values from a provider.
-* Used for global things like themes, language, authentication state.
+## 🔁 Recap: How to Use `useContext`
+
+| Step | Description                                                            |
+| ---- | ---------------------------------------------------------------------- |
+| 1️⃣  | `createContext()` to define context object                             |
+| 2️⃣  | Build a provider component to hold state (`useState`)                  |
+| 3️⃣  | Use `useContext(MyContext)` to access value inside any child component |
+| 4️⃣  | Wrap your app with the provider to share the context globally          |
+
+---
+
+## 💡 Common Use Cases
+
+* Theme toggling (light/dark)
+* User authentication (`user` object)
+* Multi-language (i18n)
+* Global app settings
+* Managing layout preferences
 
 ---
 
