@@ -151,37 +151,73 @@ If no Provider is found, it uses the **default value** from `createContext()`.
 
 ## 🚀 Example: Using `useContext` to Share Theme
 
-Let’s say we want to toggle between `"light"` and `"dark"` themes.
+### 🎯 Goal: Toggle Light/Dark Theme Using `useContext`
+
+We’ll create a theme system with:
+
+* `ThemeContext` – for global state
+* `ThemeProvider` – to wrap your app
+* `useTheme` – a custom hook
+* A component (`Page`) to toggle the theme
 
 ---
 
-### ✅ Step 1: Create the Context
+## ✅ Step-by-Step Setup
+
+### 📁 Final File Structure:
+
+```
+src/
+├── context/
+│   ├── ThemeContext.tsx     # Context + Provider
+│   └── useTheme.ts          # Custom hook
+├── App.tsx                  # App root
+└── Page.tsx                 # UI using the theme
+```
+
+---
+
+### 🔧 Step 1: Create the Theme Context
+
+📄 **`src/context/ThemeContext.tsx`**
 
 ```tsx
-// ThemeContext.tsx
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useEffect, useState, ReactNode } from 'react';
 
+// Define theme type
 type Theme = 'light' | 'dark';
 
+// Define context value shape
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
+// Create the context with a default value
+export const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
   toggleTheme: () => {},
 });
 
-// Custom hook to access the theme context
-export const useTheme = () => useContext(ThemeContext);
-
-// Provider component
+// Create the Provider component
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
 
-  const toggleTheme = () =>
+  // Load from localStorage on first render
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme') as Theme;
+    if (storedTheme) setTheme(storedTheme);
+  }, []);
+
+  // Save to localStorage whenever theme changes
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  // Toggle between light and dark
+  const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -191,13 +227,39 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 };
 ```
 
+### 🧠 What this does:
+
+* Creates a **ThemeContext** object
+* Wraps state logic in a **ThemeProvider**
+* Syncs theme with **localStorage**
+* Shares `theme` and `toggleTheme()` via context
+
 ---
 
-### ✅ Step 2: Wrap Your App with the Provider
+### 🔧 Step 2: Create the Custom Hook
+
+📄 **`src/context/useTheme.ts`**
 
 ```tsx
-// App.tsx
-import { ThemeProvider } from './ThemeContext';
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+// Custom hook to use theme
+export const useTheme = () => useContext(ThemeContext);
+```
+
+### 🧠 Why a separate file?
+
+React Fast Refresh **requires hooks and components in separate files** to work properly in development.
+
+---
+
+### 🔧 Step 3: Wrap Your App with the Provider
+
+📄 **`src/App.tsx`**
+
+```tsx
+import { ThemeProvider } from './context/ThemeContext';
 import Page from './Page';
 
 const App = () => (
@@ -209,24 +271,48 @@ const App = () => (
 export default App;
 ```
 
-> 🔒 This step is critical. Without a Provider, `useContext()` will return the default value.
+### 🧠 Why this is needed:
+
+Without wrapping your app with `<ThemeProvider>`, any component that uses `useTheme()` will fall back to the default context value.
 
 ---
 
-### ✅ Step 3: Use the Context Anywhere in the App
+### 🔧 Step 4: Use the Hook in Your Component
+
+📄 **`src/Page.tsx`**
 
 ```tsx
-// Page.tsx
-import { useTheme } from './ThemeContext';
+import { useTheme } from './context/useTheme';
 
 const Page = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: theme === 'dark' ? '#1e1e1e' : '#f5f5f5',
+        color: theme === 'dark' ? '#ffffff' : '#000000',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        transition: 'all 0.3s ease',
+      }}
+    >
       <h1>Current Theme: {theme}</h1>
-      <button onClick={toggleTheme}>
-        {theme === 'light' ? '🌙 Dark Mode' : '🌞 Light Mode'}
+      <button
+        onClick={toggleTheme}
+        style={{
+          marginTop: '1rem',
+          padding: '0.5rem 1rem',
+          fontSize: '1.2rem',
+          border: 'none',
+          borderRadius: '8px',
+          cursor: 'pointer',
+        }}
+      >
+        {theme === 'light' ? '🌙 Switch to Dark' : '🌞 Switch to Light'}
       </button>
     </div>
   );
@@ -237,26 +323,17 @@ export default Page;
 
 ---
 
-## 🔁 Recap: How to Use `useContext`
+## ✅ Summary
 
-| Step | Description                                                            |
-| ---- | ---------------------------------------------------------------------- |
-| 1️⃣  | `createContext()` to define context object                             |
-| 2️⃣  | Build a provider component to hold state (`useState`)                  |
-| 3️⃣  | Use `useContext(MyContext)` to access value inside any child component |
-| 4️⃣  | Wrap your app with the provider to share the context globally          |
-
----
-
-## 💡 Common Use Cases
-
-* Theme toggling (light/dark)
-* User authentication (`user` object)
-* Multi-language (i18n)
-* Global app settings
-* Managing layout preferences
+| Step | What You Did                       | File               |
+| ---- | ---------------------------------- | ------------------ |
+| 1️⃣  | Created context + provider         | `ThemeContext.tsx` |
+| 2️⃣  | Created a custom hook              | `useTheme.ts`      |
+| 3️⃣  | Wrapped app in provider            | `App.tsx`          |
+| 4️⃣  | Used theme + toggle in a component | `Page.tsx`         |
 
 ---
+
 
 ## 🔹 5. `useReducer` – For Complex State Logic
 
