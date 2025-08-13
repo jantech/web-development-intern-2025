@@ -106,85 +106,109 @@ npm install react-hook-form zod @hookform/resolvers
 We define the form’s structure and rules here.
 This gives **runtime validation** + **compile-time TypeScript types**.
 
+---
+
+### `formSchema.ts`
+
 ```ts
-// formSchema.ts
 import { z } from "zod";
 
+// Zod schema for validation
 export const formSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   email: z.string().email("Invalid email address"),
-  country: z.string().min(1, "Please select your country"),
-  gender: z.enum(["male", "female", "other"], { required_error: "Select your gender" }),
-  hobbies: z.array(z.string()).min(1, "Select at least one hobby"),
+  country: z.string().min(1, "Please select a country"),
+  gender: z.enum(["male", "female", "other"], {
+    required_error: "Please select your gender",
+  }),
+  hobbies: z.array(z.string()).min(1, "Pick at least one hobby"),
   resume: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "Please upload a file")
-    .refine((files) => files[0]?.size <= 2 * 1024 * 1024, "File must be under 2MB")
+    .any()
     .refine(
-      (files) => ["application/pdf"].includes(files[0]?.type || ""),
+      (file) => file instanceof FileList && file.length > 0,
+      "Resume file is required"
+    )
+    .refine(
+      (file) =>
+        file instanceof FileList &&
+        file.length > 0 &&
+        file[0].type === "application/pdf",
       "Only PDF files are allowed"
+    )
+    .refine(
+      (file) =>
+        file instanceof FileList &&
+        file.length > 0 &&
+        file[0].size <= 2 * 1024 * 1024,
+      "File size must be 2MB or less"
     ),
 });
 
-export type FormData = z.infer<typeof formSchema>;
+// ✅ Give this a different name to avoid clashing with the built-in DOM FormData
+export type FormValues = z.infer<typeof formSchema>;
 ```
 
 ---
 
-## 3️⃣ The component with all input types
+### **`AdvancedForm.tsx`**
+
+Make sure you import the CSS file at the top:
 
 ```tsx
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema, FormData } from "./formSchema";
+import { formSchema } from "./formSchema";
+import type { FormValues } from "./formSchema";
+import "./AdvancedForm.css"; // ✅ Import the CSS file
 
-export default function AllInputsForm() {
+export default function AdvancedForm() {
   const {
     register,
     handleSubmit,
-    control,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      hobbies: [],
+    },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: FormValues) => {
     console.log("Form submitted:", data);
     alert("Check console for form data");
   };
 
-  // Watching hobbies to show dynamic behavior
   const selectedHobbies = watch("hobbies", []);
 
+  const renderError = (message: unknown) =>
+    typeof message === "string" ? <p className="error">{message}</p> : null;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      {/* TEXT INPUT */}
-      <div>
+    <form className="advanced-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div className="form-group">
         <label htmlFor="fullName">Full Name</label>
         <input
           id="fullName"
           type="text"
           {...register("fullName")}
-          aria-invalid={!!errors.fullName}
+          aria-invalid={errors.fullName ? "true" : "false"}
         />
-        {errors.fullName && <p role="alert">{errors.fullName.message}</p>}
+        {renderError(errors.fullName?.message)}
       </div>
 
-      {/* EMAIL INPUT */}
-      <div>
+      <div className="form-group">
         <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
           {...register("email")}
-          aria-invalid={!!errors.email}
+          aria-invalid={errors.email ? "true" : "false"}
         />
-        {errors.email && <p role="alert">{errors.email.message}</p>}
+        {renderError(errors.email?.message)}
       </div>
 
-      {/* SELECT */}
-      <div>
+      <div className="form-group">
         <label htmlFor="country">Country</label>
         <select id="country" {...register("country")}>
           <option value="">-- Select --</option>
@@ -192,11 +216,10 @@ export default function AllInputsForm() {
           <option value="uk">United Kingdom</option>
           <option value="in">India</option>
         </select>
-        {errors.country && <p role="alert">{errors.country.message}</p>}
+        {renderError(errors.country?.message)}
       </div>
 
-      {/* RADIO BUTTONS */}
-      <div>
+      <div className="form-group">
         <p>Gender</p>
         <label>
           <input type="radio" value="male" {...register("gender")} /> Male
@@ -207,39 +230,29 @@ export default function AllInputsForm() {
         <label>
           <input type="radio" value="other" {...register("gender")} /> Other
         </label>
-        {errors.gender && <p role="alert">{errors.gender.message}</p>}
+        {renderError(errors.gender?.message)}
       </div>
 
-      {/* CHECKBOX GROUP */}
-      <div>
+      <div className="form-group">
         <p>Hobbies (pick at least one)</p>
         <label>
-          <input
-            type="checkbox"
-            value="reading"
-            {...register("hobbies")}
-          /> Reading
+          <input type="checkbox" value="reading" {...register("hobbies")} />{" "}
+          Reading
         </label>
         <label>
-          <input
-            type="checkbox"
-            value="sports"
-            {...register("hobbies")}
-          /> Sports
+          <input type="checkbox" value="sports" {...register("hobbies")} />{" "}
+          Sports
         </label>
         <label>
-          <input
-            type="checkbox"
-            value="music"
-            {...register("hobbies")}
-          /> Music
+          <input type="checkbox" value="music" {...register("hobbies")} /> Music
         </label>
-        {errors.hobbies && <p role="alert">{errors.hobbies.message}</p>}
-        <p>Selected: {selectedHobbies.join(", ") || "None"}</p>
+        {renderError(errors.hobbies?.message)}
+        <p className="selected">
+          Selected: {selectedHobbies.join(", ") || "None"}
+        </p>
       </div>
 
-      {/* FILE UPLOAD */}
-      <div>
+      <div className="form-group">
         <label htmlFor="resume">Upload Resume (PDF, max 2MB)</label>
         <input
           id="resume"
@@ -247,7 +260,7 @@ export default function AllInputsForm() {
           accept="application/pdf"
           {...register("resume")}
         />
-        {errors.resume && <p role="alert">{errors.resume.message}</p>}
+        {renderError(errors.resume?.message)}
       </div>
 
       <button type="submit" disabled={isSubmitting}>
@@ -255,6 +268,75 @@ export default function AllInputsForm() {
       </button>
     </form>
   );
+}
+```
+
+---
+
+### **`AdvancedForm.css`**
+
+```css
+.advanced-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: Arial, sans-serif;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+label {
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="file"],
+select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 0.4rem;
+}
+
+button {
+  background-color: #4cafef;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:disabled {
+  background-color: #a0c4dd;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #d9534f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.selected {
+  font-size: 0.9rem;
+  color: #555;
 }
 ```
 
