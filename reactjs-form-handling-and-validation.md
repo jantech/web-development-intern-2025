@@ -118,9 +118,7 @@ export const formSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
   email: z.string().email("Invalid email address"),
   country: z.string().min(1, "Please select a country"),
-  gender: z.enum(["male", "female", "other"], {
-    required_error: "Please select your gender",
-  }),
+  gender: z.enum(["male", "female", "other"], "Please select your gender"),
   hobbies: z.array(z.string()).min(1, "Pick at least one hobby"),
   resume: z
     .any()
