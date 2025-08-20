@@ -22,6 +22,21 @@ CREATE TABLE IF NOT EXISTS users (
 
 # 2) Backend — Node.js + Express
 
+
+### ✅ 1. Create the Project
+
+```bash
+mkdir backend
+cd backend
+npm init -y
+```
+### ✅ 2. Install Dependencies
+
+```bash
+npm install express mysql2 dotenv jsonwebtoken cors bcryptjs
+```
+
+### ✅ 3. Folder Structure
 ```
 backend/
   .env
@@ -34,6 +49,8 @@ backend/
     routes/
       auth.js
 ```
+
+---
 
 ## `backend/.env` (example)
 
