@@ -5,10 +5,24 @@
 ## SQL (run this first)
 
 ```sql
--- database.sql
-CREATE DATABASE IF NOT EXISTS auth_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- Create database (if not already created)
+CREATE DATABASE IF NOT EXISTS auth_demo
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+-- Create a new database user (replace 'auth_user' and 'strong_password')
+CREATE USER IF NOT EXISTS 'auth_user'@'localhost' IDENTIFIED BY 'strong_password';
+
+-- Grant this user full privileges only on auth_demo
+GRANT ALL PRIVILEGES ON auth_demo.* TO 'auth_user'@'localhost';
+
+-- Apply changes
+FLUSH PRIVILEGES;
+
+-- Use the database
 USE auth_demo;
 
+-- Create users table
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
@@ -17,6 +31,22 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
+
+---
+
+### Notes
+
+* Replace
+
+  * `auth_user` → with a username you like
+  * `strong_password` → with a secure password
+
+* Then in your backend `.env`, update:
+
+  ```env
+  DB_USER=auth_user
+  DB_PASS=strong_password
+  ```
 
 ---
 
