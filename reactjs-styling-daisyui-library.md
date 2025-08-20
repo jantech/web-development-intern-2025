@@ -31,75 +31,40 @@ npm install
 
 ---
 
-### ✅ 2. Install Tailwind CSS
-
-Follow the official Tailwind install for Vite:
+### ✅ 2. Install Tailwind CSS and daisyUI
 
 ```bash
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install tailwindcss@latest @tailwindcss/vite@latest daisyui@latest
 ```
-
-Now update your `tailwind.config.js`:
+Now add Tailwind CSS to Vite config
+Now update your `vite.config.ts`:
 
 ```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite';
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+    react(),
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+})
+
 ```
 
 Create a `src/index.css` file and add:
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
 ```
 
 Now import this CSS file in `src/main.tsx`:
 
 ```tsx
 import './index.css'
-```
-
----
-
-### ✅ 3. Install DaisyUI
-
-DaisyUI is a Tailwind plugin that provides UI components.
-
-```bash
-npm install daisyui
-```
-
-Update your `tailwind.config.js` to use it:
-
-```js
-plugins: [require("daisyui")],
-```
-
-Now your `tailwind.config.js` should look like this:
-
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui")],
-}
 ```
 
 ---
